@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Questionário de Sintomas MTC</title>
+
+    <style>
+        /* ==========================================================================
+           POLIHUBQUEST - CSS UI OTIMIZADO (COMPILAÇÃO PURA - SEM DEPENDÊNCIAS)
+           ========================================================================== */
+        :root {
+            --bg-base: #121212;
+            --bg-card: #1E1E1E;
+            --text-primary: #E0E0E0;
+            --text-secondary: #9E9E9E;
+            --accent-color: #00E676; 
+            --accent-hover: #00C853;
+            --border-color: #333333;
+            --touch-target-size: 48px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-base); color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent; overscroll-behavior-y: contain; 
+            padding-bottom: 120px; 
+        }
+
+        .polihub-header {
+            background-color: var(--bg-card); padding: 16px 48px 16px 16px; text-align: center;
+            border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100;
+            position: relative;
+        }
+
+        .polihub-header h1 { font-size: 20px; color: var(--accent-color); margin-bottom: 4px; }
+        .polihub-header p { font-size: 12px; color: var(--text-secondary); }
+
+        /* Taijitu Vetorial (Cadeado) */
+        .polihub-admin-lock {
+            position: absolute; top: 50%; right: 16px; transform: translateY(-50%);
+            width: 44px; height: 44px; background-color: var(--bg-card); 
+            border: 2px solid var(--border-color); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3); cursor: pointer; transition: all 0.2s ease;
+        }
+        .polihub-admin-lock:active { transform: translateY(-50%) scale(0.9); border-color: var(--accent-color); }
+        body.admin-mode .polihub-admin-lock { border-color: #FFCA28; box-shadow: 0 0 12px rgba(255, 202, 40, 0.6); }
+        .polihub-admin-lock svg { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        body.admin-mode .polihub-admin-lock svg { transform: rotate(180deg); }
+
+        .polihub-container {
+            padding: 16px; display: flex; flex-direction: column; gap: 16px;
+            max-width: 600px; margin: 0 auto; 
+        }
+
+        .polihub-card {
+            background-color: var(--bg-card); border-radius: 12px; padding: 16px;
+            border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            margin-bottom: 16px; transition: border 0.3s ease;
+        }
+
+        .polihub-card h2 { font-size: 16px; margin-bottom: 12px; color: #80CBC4; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;}
+
+        .polihub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+
+        /* Contêiner Base */
+        .polihub-touch-label {
+            display: flex; flex-direction: column; justify-content: center; min-height: var(--touch-target-size); padding: 8px;
+            background: var(--bg-base); border-radius: 8px; font-size: 13px; border: 1px solid transparent;
+            transition: all 0.2s ease; cursor: pointer; position: relative;
+        }
+
+        .checkbox-wrapper {
+            display: flex; align-items: center; width: 100%; flex-wrap: wrap; gap: 4px;
+        }
+
+        .polihub-touch-label input[type="checkbox"] {
+            width: 20px; height: 20px; margin-right: 6px; flex-shrink: 0; accent-color: var(--accent-color);
+        }
+
+        .polihub-touch-label:has(input[type="checkbox"]:checked) {
+            background: rgba(0, 230, 118, 0.1); border: 1px solid var(--accent-color); color: #fff;
+        }
+
+        /* Input de texto do {texto} (Com Checkbox) */
+        .polihub-inline-input { 
+            background: transparent; border: none; border-bottom: 2px solid var(--text-secondary); 
+            color: var(--accent-color); font-size: 14px; outline: none; text-align: center;
+            width: 60px; flex-grow: 1; max-width: 120px; transition: border-color 0.2s; padding: 2px 4px;
+        }
+        .polihub-inline-input:focus { border-bottom-color: var(--accent-color); }
+        .polihub-touch-label:has(input[type="checkbox"]:checked) .polihub-inline-input { color: #fff; border-bottom-color: var(--accent-color); }
+
+        /* Input de texto do {linha} (Sem Checkbox, Linha Inteira) */
+        .text-input-label { cursor: default; }
+        .text-input-label span { margin-bottom: 6px; font-weight: bold; color: #80CBC4; width: 100%; display: block;}
+        .polihub-text-input { 
+            width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); 
+            background: var(--bg-card); color: var(--text-primary); font-size: 14px; outline: none;
+            transition: border 0.2s; margin-top: 4px;
+        }
+        .polihub-text-input:focus { border-color: var(--accent-color); }
+        .has-value-bg { background: rgba(0, 230, 118, 0.1) !important; border: 1px solid var(--accent-color) !important; color: #fff; }
+
+        /* Micro-Controles Admin */
+        .item-admin-controls {
+            display: none; width: 100%; justify-content: space-around; 
+            margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-color);
+        }
+        body.admin-mode .item-admin-controls { display: flex; }
+        .btn-item-action { background: transparent; border: none; font-size: 16px; cursor: pointer; padding: 4px; transition: transform 0.1s; }
+        .btn-item-action:active { transform: scale(0.8); }
+
+        /* Controles do Cartão e Painel */
+        .admin-control { display: none; }
+        body.admin-mode .admin-control { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+        body.admin-mode .polihub-card { border: 1px dashed #FFCA28; }
+        
+        .btn-admin-action {
+            background: var(--bg-base); border: 1px solid #FFCA28; color: #FFCA28; padding: 6px 12px;
+            border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; margin-bottom: 4px;
+        }
+        .btn-admin-action:active { background: #FFCA28; color: #000; }
+        
+        .btn-admin-linha { border-color: #00E676; color: #00E676; }
+        .btn-admin-linha:active { background: #00E676; color: #000; }
+        
+        .btn-admin-reset { border-color: #F44336; color: #F44336; }
+        .btn-admin-reset:active { background: #F44336; color: #fff; }
+
+        /* Estilos do Backup */
+        .btn-admin-export { border-color: #2196F3; color: #2196F3; }
+        .btn-admin-export:active { background: #2196F3; color: #fff; }
+        .btn-admin-import { border-color: #9C27B0; color: #9C27B0; cursor: pointer; display: inline-block;}
+        .btn-admin-import:active { background: #9C27B0; color: #fff; }
+
+        /* Botão Finalizar */
+        .polihub-btn-finalizar {
+            background-color: var(--accent-color); color: #000; font-weight: 900; font-size: 16px;
+            border: none; border-radius: 12px; min-height: 60px; width: 100%; display: flex; 
+            align-items: center; justify-content: center; gap: 8px; cursor: pointer; margin-top: 16px;
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.4); transition: all 0.3s ease;
+        }
+        .polihub-btn-finalizar:active { transform: scale(0.97); background-color: var(--accent-hover); }
+    </style>
+</head>
+<body>
+
+    <header class="polihub-header">
+        <h1>Questionário de Sintomas</h1>
+        <p>Preencha os dados abaixo</p>
+        <div id="btn-cadeado-admin" class="polihub-admin-lock" title="Acesso Administrativo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="26" height="26">
+                <circle cx="50" cy="50" r="48" fill="#000000" />
+                <path d="M50 2 a 48 48 0 0 1 0 96 a 24 24 0 0 1 0 -48 a 24 24 0 0 0 0 -48" fill="#FFFFFF" />
+                <circle cx="50" cy="26" r="6" fill="#FFFFFF" />
+                <circle cx="50" cy="74" r="6" fill="#000000" />
+                <circle cx="50" cy="50" r="48" fill="none" stroke="#E0E0E0" stroke-width="2" />
+            </svg>
+        </div>
+    </header>
+
+    <main class="polihub-container">
+        <div id="anamnese-mtc-container"></div>
+        <button id="btn-finalizar" class="polihub-btn-finalizar">📋 COPIAR TEXTO E SALVAR .TXT</button>
+    </main>
+
+    <script>
+        const CONFIG_KEY = 'PoliHubQuest_Config';
+
+        // O DICIONÁRIO COMPLETO ORIGINAL DA CLÍNICA MTC
+        const PoliHubQuestData = {
+            sistemas_zang_fu: {
+                xiao_chang: { titulo: "Xiao Chang (Int. Delgado)", sintomas: ["Dor Abdominal", "Borborigmos", "Parasitoses", "Vômito de parasitas", "Dor Abdominal repentina", "Dor em torção", "Desejo de alimentos estranhos", "Úlcera lingual"] },
+                pi: { titulo: "Pi (Baço)", sintomas: ["Distensão abdominal", "Fraqueza muscular", "Flatulência", "Prolapso Órgãos", "Diarréia", "Sensação de peso", "Manchas roxas", "Diminuição de paladar", "Empaxamento", "Sonolência após comer", "Melhora após refeição", "Piora após refeição"] },
+                wei: { titulo: "Wei (Estômago)", sintomas: ["Pirose, epigastralgia", "Soluços frequentes", "Halitose", "Gastrite", "Náuseas, Vômitos", "Refluxo", "Hiperfagia", "Anorexia", "Digestão ruidosa/lenta", "Sabor: prefere qual: {texto}", "Sabor: evita qual: {texto}", "Sabor: necessita qual: {texto}", "Café da manhã: {linha}", "Almoço: {linha}", "Jantar: {linha}", "Observações: {linha}"] },
+                gan: { titulo: "Gan (Fígado)", sintomas: ["Distensão / dor migratória", "Dor no hipocôndrio", "Tendinopatias", "Vertigem", "Formigamento", "Bocejos / Suspiros", "Tremores", "Espasmos", "Labilidade emocional", "Herpes labial", "Olhos secos/vermelhos", "Cãimbras", "Visão noturna diminuída", "Visão borrada", "Moscas volantes", "Zumbido", "Unhas fracas", "Onicomicose", "Boca amarga"] },
+                menstruacao_gestacao: { titulo: "Ginecologia e Gestações", sintomas: ["Menarca aos {texto} anos", "Menopausa aos {texto} anos", "Ciclo duração {texto}", "Intervalo {texto}", "Atrasa", "Adianta", "Amenorréia", "Irregular", "Pouca quantidade", "Muita quantidade", "Com coágulos", "Sem coágulos", "Fluxo vermelho vivo", "Fluxo escuro", "Fluxo pálido", "Fluxo preto", "TPM", "Cólicas", "Mastalgia", "Calores menopausa", "Contraceptivo há {texto} anos", "Infertilidade", "Histórico Aborto", "Histórico de Gestações / Partos: {linha}"] },
+                shen_mente: { titulo: "Shen (Mente)", sintomas: ["Pensamento acelerado", "Pensamento lento", "Ansiedade", "Depressão", "Mágoas / Ressentimentos", "Timidez", "Irritabilidade", "Ira / Raiva explosiva", "Chora facilmente", "Indecisão", "Manias", "Preocupação", "Pânico", "Desânimo", "Medos / Insegurança", "Relacionamento Social (lazer, esportivas, etc): {linha}", "Profissão (satisfação, relação com colegas): {linha}", "Frustrações: {linha}", "Experiências marcantes na vida: {linha}"] },
+                xin: { titulo: "Xin (Coração)", sintomas: ["Palpitação", "Aperto no peito", "Afta / Ardência na língua", "Sono agitado", "Sonhos intensos", "Acorda muito cedo", "Demora a pegar no sono", "Acorda toda hora", "Dificuldade para acordar", "Verborréia", "Doença cardíaca", "Taquicardia", "Déficit de memória antiga", "Dispnéia aos P-M-G esforços desde {texto}", "H.A. há {texto}"] },
+                fei: { titulo: "Fei (Pulmão)", sintomas: ["Catarro c/ sangue", "Gripes de repetição", "Dispnéia/Asma", "Infecções Respiratórias", "Rinites", "Obstrução nasal", "Dor de garganta", "Tosse seca", "Tosse crônica", "Sinusites", "Prurido", "Pele seca", "Fumante: {texto} /dia", "Fumante - quanto tempo: {texto}"] },
+                da_chang: { titulo: "Da Chang (Int. Grosso)", sintomas: ["Cólicas intestinais", "Queimação ao evacuar", "Fezes com odor forte", "Hemorróidas"] },
+                shen_rim: { titulo: "Shen (Rim)", sintomas: ["Dor lombar, joelhos, calcanhar", "Diarréia da madrugada", "Dentes fracos", "Déficit auditivo", "Nictúria", "Doença óssea", "Tontura", "Disfunção sexual", "Litíase", "Memória recente fraca"] },
+                pang_guang: { titulo: "Pang guang (Bexiga)", sintomas: ["Sensação de peso na Bexiga", "Poliúria", "Urina amarelo escura", "Polaciúria", "Incontinência", "Cistites", "Resíduo vesical", "Urina turva", "Dor / disúria", "Hematúria", "Enurese noturna", "Jato fraco"] }
+            }
+        };
+
+        class PoliHubApp {
+            constructor() {
+                this.estadoAtual = {};
+                this.isAdmin = false;
+                
+                let configSalva = JSON.parse(localStorage.getItem(CONFIG_KEY)) || {};
+                
+                this.config = {
+                    ordem: configSalva.ordem || Object.keys(PoliHubQuestData.sistemas_zang_fu),
+                    titulosCustomizados: configSalva.titulosCustomizados || {},
+                    sintomasCustomizados: configSalva.sintomasCustomizados || {},
+                    senhaMestre: configSalva.senhaMestre || "mtc2026"
+                };
+
+                this.config.ordem.forEach(chave => {
+                    if (!this.config.sintomasCustomizados[chave]) {
+                        this.config.sintomasCustomizados[chave] = [...PoliHubQuestData.sistemas_zang_fu[chave].sintomas];
+                    }
+                });
+
+                this.containerMTC = document.getElementById('anamnese-mtc-container');
+                this.btnCadeado = document.getElementById('btn-cadeado-admin');
+                this.btnFinalizar = document.getElementById('btn-finalizar');
+                
+                this.inicializarApp();
+            }
+
+            inicializarApp() {
+                this.renderizarFormularios();
+                this.btnCadeado.addEventListener('click', () => this.alternarModoAdmin());
+                this.btnFinalizar.addEventListener('click', () => this.gerarTextoSimples());
+            }
+
+            alternarModoAdmin() {
+                if (this.isAdmin) {
+                    this.isAdmin = false;
+                    document.body.classList.remove('admin-mode');
+                } else {
+                    const senha = prompt("Acesso negado");
+                    if (senha === this.config.senhaMestre) {
+                        this.isAdmin = true;
+                        document.body.classList.add('admin-mode');
+                    } else if (senha !== null && senha !== "") {
+                        alert("Acesso negado");
+                    }
+                }
+                this.renderizarFormularios(); 
+            }
+
+            alterarSenha() {
+                const senhaAtual = prompt("Acesso negado");
+                if (senhaAtual === this.config.senhaMestre) {
+                    const novaSenha = prompt("Digite a sua NOVA senha mestre:");
+                    if (novaSenha && novaSenha.trim() !== "") {
+                        this.config.senhaMestre = novaSenha.trim();
+                        this.salvarConfig();
+                        alert("Senha alterada com sucesso!");
+                    }
+                } else if (senhaAtual !== null) {
+                    alert("Acesso negado");
+                }
+            }
+
+            resetarBancoDeDados() {
+                if(confirm("⚠️ ATENÇÃO: Isso apagará todas as edições feitas por você e restaurará as Fichas Originais exatas. Deseja continuar?")) {
+                    localStorage.removeItem(CONFIG_KEY);
+                    window.location.reload();
+                }
+            }
+
+            // =========================================================
+            // MÓDULO DE SALVAGUARDA (BACKUP LOCAL)
+            // =========================================================
+            exportarBackup() {
+                const dataStr = localStorage.getItem(CONFIG_KEY) || "{}";
+                const blob = new Blob([dataStr], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = "PoliHub_Backup_" + new Date().toISOString().slice(0,10) + ".json";
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+
+            importarBackup(event) {
+                const file = event.target.files;
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        if(data && data.ordem && data.sintomasCustomizados) {
+                            localStorage.setItem(CONFIG_KEY, JSON.stringify(data));
+                            alert("✅ Backup restaurado com sucesso! A página será recarregada.");
+                            window.location.reload();
+                        } else {
+                            alert("❌ Arquivo de backup inválido.");
+                        }
+                    } catch(err) {
+                        alert("❌ Erro ao ler o arquivo de backup.");
+                    }
+                };
+                reader.readAsText(file);
+            }
+
+            reordenarCard(indexAtual, direcao) {
+                const indexAlvo = indexAtual + direcao;
+                if (indexAlvo < 0 || indexAlvo >= this.config.ordem.length) return;
+                [this.config.ordem[indexAtual], this.config.ordem[indexAlvo]] = [this.config.ordem[indexAlvo], this.config.ordem[indexAtual]];
+                this.salvarConfig();
+                this.renderizarFormularios();
+            }
+
+            renomearTitulo(chave) {
+                const atual = this.config.titulosCustomizados[chave] || PoliHubQuestData.sistemas_zang_fu[chave].titulo;
+                const novo = prompt("Novo título do Cartão:", atual);
+                if (novo && novo.trim() !== "") {
+                    this.config.titulosCustomizados[chave] = novo.trim();
+                    this.salvarConfig();
+                    this.renderizarFormularios();
+                }
+            }
+
+            adicionarSintoma(chave, tipo) {
+                let msg = tipo === 'linha' ? 
+                    "Digite o nome da sua Nova Linha de Observação:" : 
+                    "Digite o novo sintoma:\nDica: Para criar Checkbox + preenchimento, escreva {texto}.\nEx: 'Fumante há: {texto}'";
+                
+                let novo = prompt(msg);
+                if (novo && novo.trim() !== "") {
+                    let textoFinal = tipo === 'linha' ? `${novo.trim()} {linha}` : novo.trim();
+                    this.config.sintomasCustomizados[chave].push(textoFinal);
+                    this.salvarConfig();
+                    this.renderizarFormularios();
+                }
+            }
+
+            reordenarItem(chave, indexAtual, direcao) {
+                let lista = this.config.sintomasCustomizados[chave];
+                let indexAlvo = indexAtual + direcao;
+                if (indexAlvo < 0 || indexAlvo >= lista.length) return;
+                [lista[indexAtual], lista[indexAlvo]] = [lista[indexAlvo], lista[indexAtual]];
+                this.salvarConfig();
+                this.renderizarFormularios();
+            }
+
+            editarItem(chave, index) {
+                const atual = this.config.sintomasCustomizados[chave][index];
+                const novo = prompt("Edite o campo (Mantenha {texto} ou {linha} se houver):", atual);
+                if (novo && novo.trim() !== "") {
+                    this.config.sintomasCustomizados[chave][index] = novo.trim();
+                    if (atual !== novo.trim() && this.estadoAtual[chave] && this.estadoAtual[chave][atual]) {
+                        delete this.estadoAtual[chave][atual]; 
+                    }
+                    this.salvarConfig();
+                    this.renderizarFormularios();
+                }
+            }
+
+            deletarItem(chave, index) {
+                if (confirm("Tem certeza que deseja remover este item?")) {
+                    const sintoma = this.config.sintomasCustomizados[chave][index];
+                    this.config.sintomasCustomizados[chave].splice(index, 1);
+                    if (this.estadoAtual[chave] && this.estadoAtual[chave][sintoma]) {
+                        delete this.estadoAtual[chave][sintoma];
+                    }
+                    this.salvarConfig();
+                    this.renderizarFormularios();
+                }
+            }
+
+            salvarConfig() { localStorage.setItem(CONFIG_KEY, JSON.stringify(this.config)); }
+
+            // =========================================================
+            // MOTOR DE RENDERIZAÇÃO
+            // =========================================================
+            renderizarFormularios() {
+                this.containerMTC.innerHTML = '';
+                let fragment = document.createDocumentFragment();
+
+                if (this.isAdmin) {
+                    const painelAdmin = document.createElement('section');
+                    painelAdmin.className = 'polihub-card';
+                    painelAdmin.style.borderColor = '#FFCA28';
+                    
+                    const tituloPainel = document.createElement('h2');
+                    tituloPainel.style.color = '#FFCA28';
+                    tituloPainel.textContent = '⚙️ Painel do Consultório';
+                    painelAdmin.appendChild(tituloPainel);
+
+                    const painelBotoes = document.createElement('div');
+                    painelBotoes.style.display = 'flex';
+                    painelBotoes.style.flexWrap = 'wrap';
+                    painelBotoes.style.gap = '8px';
+
+                    const btnMudarSenha = document.createElement('button');
+                    btnMudarSenha.className = 'btn-admin-action';
+                    btnMudarSenha.innerHTML = '🔑 Alterar Senha';
+                    btnMudarSenha.onclick = () => this.alterarSenha();
+                    painelBotoes.appendChild(btnMudarSenha);
+
+                    const btnExport = document.createElement('button');
+                    btnExport.className = 'btn-admin-action btn-admin-export';
+                    btnExport.innerHTML = '💾 Exportar Backup';
+                    btnExport.onclick = () => this.exportarBackup();
+                    painelBotoes.appendChild(btnExport);
+
+                    const btnImportLabel = document.createElement('label');
+                    btnImportLabel.className = 'btn-admin-action btn-admin-import';
+                    btnImportLabel.innerHTML = '📂 Importar Backup';
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = '.json';
+                    fileInput.style.display = 'none';
+                    fileInput.onchange = (e) => this.importarBackup(e);
+                    btnImportLabel.appendChild(fileInput);
+                    painelBotoes.appendChild(btnImportLabel);
+
+                    const btnReset = document.createElement('button');
+                    btnReset.className = 'btn-admin-action btn-admin-reset';
+                    btnReset.innerHTML = '♻️ Restaurar Fichas Padrão';
+                    btnReset.onclick = () => this.resetarBancoDeDados();
+                    painelBotoes.appendChild(btnReset);
+
+                    painelAdmin.appendChild(painelBotoes);
+                    fragment.appendChild(painelAdmin);
+                }
+
+                this.config.ordem.forEach((chave, indexCard) => {
+                    const sistemaData = PoliHubQuestData.sistemas_zang_fu[chave];
+                    if (!sistemaData) return;
+
+                    const card = document.createElement('section');
+                    card.className = 'polihub-card';
+                    
+                    const adminControls = document.createElement('div');
+                    adminControls.className = 'admin-control';
+                    
+                    const btnSubir = document.createElement('button'); btnSubir.className = 'btn-admin-action'; btnSubir.innerHTML = '⬆️ Subir Bloco'; btnSubir.onclick = () => this.reordenarCard(indexCard, -1);
+                    const btnDescer = document.createElement('button'); btnDescer.className = 'btn-admin-action'; btnDescer.innerHTML = '⬇️ Descer Bloco'; btnDescer.onclick = () => this.reordenarCard(indexCard, 1);
+                    const btnRenomear = document.createElement('button'); btnRenomear.className = 'btn-admin-action'; btnRenomear.innerHTML = '✏️ Editar Título'; btnRenomear.onclick = () => this.renomearTitulo(chave);
+                    const btnAddCheckbox = document.createElement('button'); btnAddCheckbox.className = 'btn-admin-action'; btnAddCheckbox.innerHTML = '➕ Checkbox'; btnAddCheckbox.onclick = () => this.adicionarSintoma(chave, 'checkbox');
+                    const btnAddLinha = document.createElement('button'); btnAddLinha.className = 'btn-admin-action btn-admin-linha'; btnAddLinha.innerHTML = '➕ Nova Linha Livre'; btnAddLinha.onclick = () => this.adicionarSintoma(chave, 'linha');
+
+                    if (indexCard > 0) adminControls.appendChild(btnSubir);
+                    if (indexCard < this.config.ordem.length - 1) adminControls.appendChild(btnDescer);
+                    adminControls.appendChild(btnRenomear);
+                    adminControls.appendChild(btnAddCheckbox);
+                    adminControls.appendChild(btnAddLinha);
+
+                    card.appendChild(adminControls);
+
+                    const titulo = document.createElement('h2');
+                    titulo.textContent = this.config.titulosCustomizados[chave] || sistemaData.titulo;
+                    card.appendChild(titulo);
+
+                    const grid = document.createElement('div');
+                    grid.className = 'polihub-grid';
+
+                    const listaSintomas = this.config.sintomasCustomizados[chave];
+
+                    listaSintomas.forEach((sintoma, indexItem) => {
+                        const isText = sintoma.includes('{texto}');
+                        const isLinha = sintoma.includes('{linha}');
+                        
+                        const label = document.createElement('label'); 
+                        label.className = 'polihub-touch-label';
+
+                        const contentWrapper = document.createElement('div');
+                        contentWrapper.className = 'checkbox-wrapper';
+
+                        const estadoItem = this.estadoAtual[chave] && this.estadoAtual[chave][sintoma];
+
+                        if (isLinha) {
+                            label.classList.add('text-input-label');
+                            contentWrapper.style.flexDirection = 'column';
+                            contentWrapper.style.alignItems = 'flex-start';
+
+                            const textoBase = sintoma.replace('{linha}', '').trim();
+
+                            if (textoBase !== '') {
+                                const span1 = document.createElement('span'); 
+                                span1.textContent = textoBase;
+                                contentWrapper.appendChild(span1);
+                            }
+
+                            const textInput = document.createElement('input'); 
+                            textInput.type = 'text'; 
+                            textInput.className = 'polihub-text-input';
+                            textInput.placeholder = 'Digite as observações...';
+                            
+                            if (estadoItem && typeof estadoItem === 'object' && estadoItem.text) {
+                                textInput.value = estadoItem.text;
+                                label.classList.add('has-value-bg');
+                            }
+
+                            const updateLinhaState = () => {
+                                if (!this.estadoAtual[chave]) this.estadoAtual[chave] = {};
+                                if (textInput.value.trim() !== '') {
+                                    this.estadoAtual[chave][sintoma] = { isLinha: true, text: textInput.value };
+                                    label.classList.add('has-value-bg');
+                                } else {
+                                    delete this.estadoAtual[chave][sintoma];
+                                    label.classList.remove('has-value-bg');
+                                }
+                            };
+
+                            textInput.addEventListener('input', updateLinhaState);
+                            contentWrapper.appendChild(textInput);
+                        } 
+                        else {
+                            const checkbox = document.createElement('input'); 
+                            checkbox.type = 'checkbox'; 
+                            checkbox.value = sintoma;
+
+                            if (estadoItem) {
+                                if (typeof estadoItem === 'object' && estadoItem.checked) checkbox.checked = true;
+                                else if (estadoItem === true) checkbox.checked = true;
+                            }
+
+                            contentWrapper.appendChild(checkbox);
+
+                            if (isText) {
+                                const partes = sintoma.split('{texto}');
+                                
+                                const textoAntes = partes.shift() || '';
+                                const textoDepois = partes.shift() || '';
+
+                                if (textoAntes.trim() !== '') {
+                                    const span1 = document.createElement('span'); 
+                                    span1.textContent = textoAntes;
+                                    contentWrapper.appendChild(span1);
+                                }
+
+                                const textInput = document.createElement('input'); 
+                                textInput.type = 'text'; 
+                                textInput.className = 'polihub-inline-input';
+                                textInput.placeholder = ''; 
+                                
+                                if (estadoItem && typeof estadoItem === 'object' && estadoItem.text) {
+                                    textInput.value = estadoItem.text;
+                                }
+
+                                const updateState = () => {
+                                    if (!this.estadoAtual[chave]) this.estadoAtual[chave] = {};
+                                    if (checkbox.checked) {
+                                        this.estadoAtual[chave][sintoma] = { checked: true, text: textInput.value };
+                                        label.classList.add('has-value-bg');
+                                    } else {
+                                        delete this.estadoAtual[chave][sintoma];
+                                        label.classList.remove('has-value-bg');
+                                    }
+                                };
+
+                                checkbox.addEventListener('change', updateState);
+                                
+                                textInput.addEventListener('input', (e) => {
+                                    if (e.target.value.trim() !== '' && !checkbox.checked) {
+                                        checkbox.checked = true;
+                                    }
+                                    updateState();
+                                });
+
+                                contentWrapper.appendChild(textInput);
+
+                                if (textoDepois.trim() !== '') {
+                                    const span2 = document.createElement('span'); 
+                                    span2.textContent = textoDepois;
+                                    contentWrapper.appendChild(span2);
+                                }
+                            } else {
+                                const span = document.createElement('span'); 
+                                span.textContent = sintoma;
+                                contentWrapper.appendChild(span);
+
+                                checkbox.addEventListener('change', (e) => {
+                                    if (!this.estadoAtual[chave]) this.estadoAtual[chave] = {};
+                                    if (e.target.checked) {
+                                        this.estadoAtual[chave][sintoma] = true;
+                                    } else {
+                                        delete this.estadoAtual[chave][sintoma];
+                                    }
+                                });
+                            }
+                        }
+
+                        label.appendChild(contentWrapper);
+
+                        // Controles MicroAdmin
+                        if (this.isAdmin) {
+                            const itemControls = document.createElement('div');
+                            itemControls.className = 'item-admin-controls';
+
+                            const btnUp = document.createElement('button'); btnUp.className = 'btn-item-action'; btnUp.innerHTML = '⬆️'; btnUp.title = 'Subir';
+                            btnUp.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.reordenarItem(chave, indexItem, -1); };
+
+                            const btnDown = document.createElement('button'); btnDown.className = 'btn-item-action'; btnDown.innerHTML = '⬇️'; btnDown.title = 'Descer';
+                            btnDown.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.reordenarItem(chave, indexItem, 1); };
+
+                            const btnEdit = document.createElement('button'); btnEdit.className = 'btn-item-action'; btnEdit.innerHTML = '✏️'; btnEdit.title = 'Editar';
+                            btnEdit.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.editarItem(chave, indexItem); };
+
+                            const btnDel = document.createElement('button'); btnDel.className = 'btn-item-action'; btnDel.innerHTML = '❌'; btnDel.title = 'Apagar';
+                            btnDel.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.deletarItem(chave, indexItem); };
+
+                            if (indexItem > 0) itemControls.appendChild(btnUp);
+                            if (indexItem < listaSintomas.length - 1) itemControls.appendChild(btnDown);
+                            itemControls.appendChild(btnEdit);
+                            itemControls.appendChild(btnDel);
+
+                            label.appendChild(itemControls);
+                        }
+
+                        grid.appendChild(label);
+                    });
+
+                    card.appendChild(grid);
+                    fragment.appendChild(card);
+                });
+                
+                this.containerMTC.appendChild(fragment);
+            }
+
+            // =========================================================
+            // NOVO MOTOR DE EXPORTAÇÃO (TEXTO SIMPLES E ÁREA DE TRANSFERÊNCIA)
+            // =========================================================
+            gerarTextoSimples() {
+                let textoFinal = "QUESTIONÁRIO DE SINTOMAS - MTC\n";
+                textoFinal += "========================================\n\n";
+                let temSintoma = false;
+
+                this.config.ordem.forEach(chave => {
+                    if (this.estadoAtual[chave] && Object.keys(this.estadoAtual[chave]).length > 0) {
+                        temSintoma = true;
+                        const titulo = this.config.titulosCustomizados[chave] || PoliHubQuestData.sistemas_zang_fu[chave].titulo;
+                        
+                        textoFinal += `[ ${titulo.toUpperCase()} ]\n`;
+                        
+                        for (const [sintomaOriginal, valor] of Object.entries(this.estadoAtual[chave])) {
+                            if (sintomaOriginal.includes('{linha}')) {
+                                const textoLimpo = sintomaOriginal.replace('{linha}', '').trim();
+                                const textoDigitado = (typeof valor === 'object') ? valor.text : '';
+                                if (textoDigitado && textoDigitado.trim() !== '') {
+                                    textoFinal += `- ${textoLimpo}: ${textoDigitado}\n`;
+                                }
+                            } 
+                            else if (sintomaOriginal.includes('{texto}')) {
+                                if (typeof valor === 'object' && valor.checked) {
+                                    const textoDigitado = valor.text && valor.text.trim() !== '' ? valor.text : '_____';
+                                    const textoLimpo = sintomaOriginal.replace('{texto}', textoDigitado);
+                                    textoFinal += `- ${textoLimpo}\n`;
+                                }
+                            } 
+                            else if (valor === true) {
+                                textoFinal += `- ${sintomaOriginal}\n`;
+                            }
+                        }
+                        textoFinal += "\n";
+                    }
+                });
+
+                if (!temSintoma) {
+                    textoFinal += "Nenhum sintoma foi assinalado.\n";
+                }
+
+                // 1. Gera e baixa o arquivo .txt (Para manter um registro físico)
+                const blob = new Blob([textoFinal], { type: "text/plain;charset=utf-8" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = "Sintomas_Paciente.txt";
+                a.click();
+                URL.revokeObjectURL(url);
+
+                // 2. Copia direto para a área de transferência para colar no Gemini
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(textoFinal).then(() => {
+                        this.animarBotaoSucesso();
+                    }).catch(err => {
+                        console.error("Erro ao copiar para área de transferência:", err);
+                        // Se falhar a cópia invisível, o .txt já foi baixado como garantia
+                    });
+                } else {
+                    // Fallback visual
+                    this.animarBotaoSucesso();
+                }
+            }
+
+            animarBotaoSucesso() {
+                const btn = this.btnFinalizar;
+                const textoOriginal = btn.innerHTML;
+                const corOriginal = btn.style.backgroundColor;
+                
+                btn.innerHTML = "📋 TEXTO COPIADO COM SUCESSO!";
+                btn.style.backgroundColor = "#2196F3"; // Azul de sucesso
+                
+                setTimeout(() => {
+                    btn.innerHTML = textoOriginal;
+                    btn.style.backgroundColor = corOriginal;
+                }, 3000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => new PoliHubApp());
+    </script>
+</body>
+</html></html></html></html>
