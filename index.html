@@ -171,19 +171,20 @@
     <script>
         const CONFIG_KEY = 'PoliHubQuest_Config';
 
+        // O SEU CÓDIGO DE FÁBRICA DEFINITIVO FOI INJETADO AQUI:
         const PoliHubQuestData = {
             sistemas_zang_fu: {
-                xiao_chang: { titulo: "Xiao Chang (Int. Delgado)", sintomas: ["Dor Abdominal", "Borborigmos", "Parasitoses", "Vômito de parasitas", "Dor Abdominal repentina", "Dor em torção", "Desejo de alimentos estranhos", "Úlcera lingual"] },
-                pi: { titulo: "Pi (Baço)", sintomas: ["Distensão abdominal", "Fraqueza muscular", "Flatulência", "Prolapso Órgãos", "Diarréia", "Sensação de peso", "Manchas roxas", "Diminuição de paladar", "Empaxamento", "Sonolência após comer", "Melhora após refeição", "Piora após refeição"] },
-                wei: { titulo: "Wei (Estômago)", sintomas: ["Pirose, epigastralgia", "Soluços frequentes", "Halitose", "Gastrite", "Náuseas, Vômitos", "Refluxo", "Hiperfagia", "Anorexia", "Digestão ruidosa/lenta", "Sabor: prefere qual: {texto}", "Sabor: evita qual: {texto}", "Sabor: necessita qual: {texto}", "Café da manhã: {linha}", "Almoço: {linha}", "Jantar: {linha}", "Observações: {linha}"] },
-                gan: { titulo: "Gan (Fígado)", sintomas: ["Distensão / dor migratória", "Dor no hipocôndrio", "Tendinopatias", "Vertigem", "Formigamento", "Bocejos / Suspiros", "Tremores", "Espasmos", "Labilidade emocional", "Herpes labial", "Olhos secos/vermelhos", "Cãimbras", "Visão noturna diminuída", "Visão borrada", "Moscas volantes", "Zumbido", "Unhas fracas", "Onicomicose", "Boca amarga"] },
-                menstruacao_gestacao: { titulo: "Ginecologia e Gestações", sintomas: ["Menarca aos {texto} anos", "Menopausa aos {texto} anos", "Ciclo duração {texto}", "Intervalo {texto}", "Atrasa", "Adianta", "Amenorréia", "Irregular", "Pouca quantidade", "Muita quantidade", "Com coágulos", "Sem coágulos", "Fluxo vermelho vivo", "Fluxo escuro", "Fluxo pálido", "Fluxo preto", "TPM", "Cólicas", "Mastalgia", "Calores menopausa", "Contraceptivo há {texto} anos", "Infertilidade", "Histórico Aborto", "Histórico de Gestações / Partos: {linha}"] },
-                shen_mente: { titulo: "Shen (Mente)", sintomas: ["Pensamento acelerado", "Pensamento lento", "Ansiedade", "Depressão", "Mágoas / Ressentimentos", "Timidez", "Irritabilidade", "Ira / Raiva explosiva", "Chora facilmente", "Indecisão", "Manias", "Preocupação", "Pânico", "Desânimo", "Medos / Insegurança", "Relacionamento Social (lazer, esportivas, etc): {linha}", "Profissão (satisfação, relação com colegas): {linha}", "Frustrações: {linha}", "Experiências marcantes na vida: {linha}"] },
-                xin: { titulo: "Xin (Coração)", sintomas: ["Palpitação", "Aperto no peito", "Afta / Ardência na língua", "Sono agitado", "Sonhos intensos", "Acorda muito cedo", "Demora a pegar no sono", "Acorda toda hora", "Dificuldade para acordar", "Verborréia", "Doença cardíaca", "Taquicardia", "Déficit de memória antiga", "Dispnéia aos P-M-G esforços desde {texto}", "H.A. há {texto}"] },
-                fei: { titulo: "Fei (Pulmão)", sintomas: ["Catarro c/ sangue", "Gripes de repetição", "Dispnéia/Asma", "Infecções Respiratórias", "Rinites", "Obstrução nasal", "Dor de garganta", "Tosse seca", "Tosse crônica", "Sinusites", "Prurido", "Pele seca", "Fumante: {texto} /dia", "Fumante - quanto tempo: {texto}"] },
-                da_chang: { titulo: "Da Chang (Int. Grosso)", sintomas: ["Cólicas intestinais", "Queimação ao evacuar", "Fezes com odor forte", "Hemorróidas"] },
-                shen_rim: { titulo: "Shen (Rim)", sintomas: ["Dor lombar, joelhos, calcanhar", "Diarréia da madrugada", "Dentes fracos", "Déficit auditivo", "Nictúria", "Doença óssea", "Tontura", "Disfunção sexual", "Litíase", "Memória recente fraca"] },
-                pang_guang: { titulo: "Pang guang (Bexiga)", sintomas: ["Sensação de peso na Bexiga", "Poliúria", "Urina amarelo escura", "Polaciúria", "Incontinência", "Cistites", "Resíduo vesical", "Urina turva", "Dor / disúria", "Hematúria", "Enurese noturna", "Jato fraco"] }
+                shen_mente: { titulo: "Shen (Mente)", sintomas: ["Pensamento acelerado","Pensamento lento","Ideias estranhas","Ansiedade","Depressão","Mágoas / Ressentimentos","Timidez","Irritabilidade","Ira / Raiva explosiva","Chora facilmente","Indecisão","Manias","Preocupação","Pânico","Desânimo","Medos / Insegurança","Memória recente boa","Memória recente prejudicada (Quanto tempo?) {texto}"] },
+                gan: { titulo: "Gan (Fígado)", sintomas: ["Distensão / dor migratória","Dor no hipocôndrio","Tendinopatias","Vertigem","Formigamento","Bocejos / Suspiros","Tremores","Espasmos","Labilidade emocional","Herpes labial","Olhos secos/vermelhos","Cãimbras","Visão noturna diminuída","Visão borrada","Moscas volantes","Zumbido","Unhas fracas","Onicomicose","Boca amarga"] },
+                xin: { titulo: "Xin (Coração)", sintomas: ["Palpitação","Aperto no peito","Afta / Ardência na língua","Sono agitado","Sonhos intensos","Acorda muito cedo","Demora a pegar no sono","Acorda toda hora","Dificuldade para acordar","Verborréia","Doença cardíaca","Taquicardia","Déficit de memória antiga","Dispnéia aos P-M-G esforços desde {texto}","Hipertensão arterial há {texto}"] },
+                xiao_chang: { titulo: "Xiao Chang (Int. Delgado)", sintomas: ["Dor Abdominal","Borborigmos","Parasitoses","Vômito de parasitas","Dor Abdominal repentina","Dor em torção","Desejo de alimentos estranhos (terra, cera)","Úlcera lingual"] },
+                pi: { titulo: "Pi (Baço)", sintomas: ["Distensão abdominal","Fraqueza muscular","Flatulência","Prolapso Órgãos","Diarréia","Sensação de peso","Manchas roxas","Diminuição de paladar","Empaxamento","Sonolência após comer","Melhora após refeição","Piora após refeição"] },
+                wei: { titulo: "Wei (Estômago)", sintomas: ["Dor estômago","Azia","Soluços frequentes","Mau hálito","Gastrite","Náuseas, Vômitos","Refluxo","Aumento da fome","Falta de apetite","Má digestão","Sabor: prefere qual (Doce, Salgado, Picante, Amargo, Azedo): {texto}","Sabor: evita qual (Doce, Salgado, Picante, Amargo, Azedo): {texto}","Sabor: necessita qual (Doce, Salgado, Picante, Amargo, Azedo): {texto}","Café da manhã: Horários e principais alimentos consumidos {linha}","Almoço: Horários e principais alimentos consumidos {linha}","Jantar: Horários e principais alimentos consumidos {linha} {linha}"] },
+                fei: { titulo: "Fei (Pulmão)", sintomas: ["Catarro c/ sangue","Gripes de repetição","Dispnéia/Asma","Infecções Respiratórias","Rinites","Obstrução nasal","Dor de garganta","Tosse seca","Tosse crônica","Sinusites","Prurido","Pele seca","Fumante - quanto tempo: {texto}"] },
+                da_chang: { titulo: "Da Chang (Int. Grosso)", sintomas: ["Cólicas intestinais","Queimação ao evacuar","Fezes com odor forte","Hemorróidas","Constipação intestinal","Mais de 2 evacuações ao dia","Consistência das fezes (Liquidas, semi-liquidas, amolecidas, formato de bolinhas, formato de anéis, secas e endurecidas, sangue nas fezes) {linha}"] },
+                shen_rim: { titulo: "Shen (Rim)", sintomas: ["Dor ou fraqueza (lombar, joelhos, calcanhar ou pés)","Diarréia da madrugada","Dentes fracos","Déficit auditivo","Acorda de madrugada pra urinar diariamente ou semanalmente","Doença óssea","Tontura","Disfunção sexual","Pedra no rim","Memória recente fraca","Doença neurológica","Zumbido no ouvido","Doença renal há {texto}"] },
+                pang_guang: { titulo: "Pang guang (Bexiga)", sintomas: ["Sensação de peso na Bexiga","Quantidade de volume urinário aumentado (Tempo prolongado para parar de urinar)","Quantidade da frequência urinária aumentada (mais de 3x/dia mesmo tomando pouca água)","Urina amarelo escura","Incontinência urinária","Infecções urinárias de repetição","Resíduos presentes na urina","Urina turva","Dor ao urinar","Sangue na urina","Incontinência urinária noturna","Jato fraco"] },
+                menstruacao_gestacao: { titulo: "Ginecologia e Gestações", sintomas: ["Menarca aos {texto} anos","Menopausa aos {texto} anos","Ciclo duração {texto}","Intervalo {texto}","Atrasa","Adianta","Ausência de menstruação por mais de 90 dias","Irregular","Pouca quantidade","Muita quantidade","Com coágulos","Sem coágulos","Fluxo vermelho vivo","Fluxo vermelho escuro","Fluxo vermelho pálido","Fluxo preto","TPM","Cólicas (antes, durante, depois) {texto}","Dor nos seios ou lombalgia durante menstruação","Calores menopausa","Contraceptivo há {texto} anos","Infertilidade","Partos normais","Partos cesarias","Forceps","Natimorto","Aborto espontâneo","Aborto provocado","Idade dos filhos {texto}"] }
             }
         };
 
@@ -275,7 +276,6 @@
                 const input = event.target;
                 if (!input || !input.files || input.files.length === 0) return;
                 
-                // A SOLUÇÃO DEFINITIVA: O método item(0) não pode ser apagado por formatações!
                 const fileToLoad = input.files.item(0); 
                 
                 const reader = new FileReader();
@@ -293,7 +293,7 @@
                     } catch(err) {
                         alert("❌ Erro fatal: O arquivo escolhido não é um formato suportado.");
                     }
-                    input.value = ''; // Limpa a memória para não travar o próximo uso
+                    input.value = ''; 
                 };
 
                 reader.onerror = () => {
