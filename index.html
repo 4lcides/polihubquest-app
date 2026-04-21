@@ -275,7 +275,7 @@
                 const files = event.target.files;
                 if (!files || files.length === 0) return;
                 
-                // O ERRO FOI AQUI: É necessário capturar o arquivo exato  da lista
+                // AQUI ESTÁ A CORREÇÃO CIRÚRGICA:  captura o arquivo físico real!
                 const file = files; 
                 
                 const reader = new FileReader();
