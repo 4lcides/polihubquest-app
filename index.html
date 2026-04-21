@@ -85,7 +85,7 @@
             background: rgba(0, 230, 118, 0.1); border: 1px solid var(--accent-color); color: #fff;
         }
 
-        /* Input de texto do {texto} (Com Checkbox) */
+        /* Input de texto do {texto} */
         .polihub-inline-input { 
             background: transparent; border: none; border-bottom: 2px solid var(--text-secondary); 
             color: var(--accent-color); font-size: 14px; outline: none; text-align: center;
@@ -94,7 +94,7 @@
         .polihub-inline-input:focus { border-bottom-color: var(--accent-color); }
         .polihub-touch-label:has(input[type="checkbox"]:checked) .polihub-inline-input { color: #fff; border-bottom-color: var(--accent-color); }
 
-        /* Input de texto do {linha} (Sem Checkbox, Linha Inteira) */
+        /* Input de texto do {linha} */
         .text-input-label { cursor: default; }
         .text-input-label span { margin-bottom: 6px; font-weight: bold; color: #80CBC4; width: 100%; display: block;}
         .polihub-text-input { 
@@ -171,7 +171,6 @@
     <script>
         const CONFIG_KEY = 'PoliHubQuest_Config';
 
-        // O DICIONÁRIO COMPLETO ORIGINAL DA CLÍNICA MTC
         const PoliHubQuestData = {
             sistemas_zang_fu: {
                 xiao_chang: { titulo: "Xiao Chang (Int. Delgado)", sintomas: ["Dor Abdominal", "Borborigmos", "Parasitoses", "Vômito de parasitas", "Dor Abdominal repentina", "Dor em torção", "Desejo de alimentos estranhos", "Úlcera lingual"] },
@@ -259,7 +258,7 @@
             }
 
             // =========================================================
-            // MÓDULO DE SALVAGUARDA (BACKUP LOCAL)
+            // MÓDULO DE SALVAGUARDA CORRIGIDO (O REPARO CIRÚRGICO)
             // =========================================================
             exportarBackup() {
                 const dataStr = localStorage.getItem(CONFIG_KEY) || "{}";
@@ -273,8 +272,12 @@
             }
 
             importarBackup(event) {
-                const file = event.target.files;
-                if (!file) return;
+                const files = event.target.files;
+                if (!files || files.length === 0) return;
+                
+                // O ERRO FOI AQUI: É necessário capturar o arquivo exato  da lista
+                const file = files; 
+                
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     try {
@@ -287,7 +290,7 @@
                             alert("❌ Arquivo de backup inválido.");
                         }
                     } catch(err) {
-                        alert("❌ Erro ao ler o arquivo de backup.");
+                        alert("❌ Erro ao ler o arquivo de backup. Certifique-se de ser um arquivo .json.");
                     }
                 };
                 reader.readAsText(file);
@@ -653,7 +656,6 @@
                     textoFinal += "Nenhum sintoma foi assinalado.\n";
                 }
 
-                // 1. Gera e baixa o arquivo .txt (Para manter um registro físico)
                 const blob = new Blob([textoFinal], { type: "text/plain;charset=utf-8" });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -662,16 +664,13 @@
                 a.click();
                 URL.revokeObjectURL(url);
 
-                // 2. Copia direto para a área de transferência para colar no Gemini
                 if (navigator.clipboard && window.isSecureContext) {
                     navigator.clipboard.writeText(textoFinal).then(() => {
                         this.animarBotaoSucesso();
                     }).catch(err => {
                         console.error("Erro ao copiar para área de transferência:", err);
-                        // Se falhar a cópia invisível, o .txt já foi baixado como garantia
                     });
                 } else {
-                    // Fallback visual
                     this.animarBotaoSucesso();
                 }
             }
@@ -682,7 +681,7 @@
                 const corOriginal = btn.style.backgroundColor;
                 
                 btn.innerHTML = "📋 TEXTO COPIADO COM SUCESSO!";
-                btn.style.backgroundColor = "#2196F3"; // Azul de sucesso
+                btn.style.backgroundColor = "#2196F3"; 
                 
                 setTimeout(() => {
                     btn.innerHTML = textoOriginal;
@@ -694,4 +693,4 @@
         document.addEventListener('DOMContentLoaded', () => new PoliHubApp());
     </script>
 </body>
-</html></html>
+</html>
