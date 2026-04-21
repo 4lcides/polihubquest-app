@@ -171,7 +171,7 @@
     <script>
         const CONFIG_KEY = 'PoliHubQuest_Config';
 
-        // O SEU CÓDIGO DE FÁBRICA DEFINITIVO FOI MANTIDO AQUI:
+        // O SEU NOVO CÓDIGO DE FÁBRICA ATUALIZADO FOI INJETADO AQUI:
         const PoliHubQuestData = {
             sistemas_zang_fu: {
                 shen_mente: { titulo: "Shen (Mente)", sintomas: ["Pensamento acelerado","Pensamento lento","Ideias estranhas","Ansiedade","Depressão","Mágoas / Ressentimentos","Timidez","Irritabilidade","Ira / Raiva explosiva","Chora facilmente","Indecisão","Manias","Preocupação","Pânico","Desânimo","Medos / Insegurança","Memória recente boa","Memória recente prejudicada (Quanto tempo?) {texto}"] },
@@ -179,7 +179,7 @@
                 xin: { titulo: "Xin (Coração)", sintomas: ["Palpitação","Aperto no peito","Afta / Ardência na língua","Sono agitado","Sonhos intensos","Acorda muito cedo","Demora a pegar no sono","Acorda toda hora","Dificuldade para acordar","Verborréia","Doença cardíaca","Taquicardia","Déficit de memória antiga","Dispnéia aos P-M-G esforços desde {texto}","Hipertensão arterial há {texto}"] },
                 xiao_chang: { titulo: "Xiao Chang (Int. Delgado)", sintomas: ["Dor Abdominal","Borborigmos","Parasitoses","Vômito de parasitas","Dor Abdominal repentina","Dor em torção","Desejo de alimentos estranhos (terra, cera)","Úlcera lingual"] },
                 pi: { titulo: "Pi (Baço)", sintomas: ["Distensão abdominal","Fraqueza muscular","Flatulência","Prolapso Órgãos","Diarréia","Sensação de peso","Manchas roxas","Diminuição de paladar","Empaxamento","Sonolência após comer","Melhora após refeição","Piora após refeição"] },
-                wei: { titulo: "Wei (Estômago)", sintomas: ["Dor estômago","Azia","Soluços frequentes","Mau hálito","Gastrite","Náuseas, Vômitos","Refluxo","Aumento da fome","Falta de apetite","Má digestão","Sabor: prefere qual (Doce, Salgado, Picante, Amargo, Azedo): {texto}","Sabor: evita qual (Doce, Salgado, Picante, Amargo, Azedo): {texto}","Sabor: necessita qual (Doce, Salgado, Picante, Amargo, Azedo): {texto}","Café da manhã: Horários e principais alimentos consumidos {linha}","Almoço: Horários e principais alimentos consumidos {linha}","Jantar: Horários e principais alimentos consumidos {linha} {linha}"] },
+                wei: { titulo: "Wei (Estômago)", sintomas: ["Dor estômago","Azia","Soluços frequentes","Mau hálito","Gastrite","Náuseas, Vômitos","Refluxo","Aumento da fome","Falta de apetite","Má digestão","Prefere qual sabor? (Doce, Salgado, Picante, Amargo, Azedo) {linha}","Evita qual sabor? (Doce, Salgado, Picante, Amargo, Azedo) {linha}","Necessita qual sabor? (Doce, Salgado, Picante, Amargo, Azedo) {linha}","Café da manhã: Horários e principais alimentos consumidos {linha}","Almoço: Horários e principais alimentos consumidos {linha}","Jantar: Horários e principais alimentos consumidos {linha} {linha}"] },
                 fei: { titulo: "Fei (Pulmão)", sintomas: ["Catarro c/ sangue","Gripes de repetição","Dispnéia/Asma","Infecções Respiratórias","Rinites","Obstrução nasal","Dor de garganta","Tosse seca","Tosse crônica","Sinusites","Prurido","Pele seca","Fumante - quanto tempo: {texto}"] },
                 da_chang: { titulo: "Da Chang (Int. Grosso)", sintomas: ["Cólicas intestinais","Queimação ao evacuar","Fezes com odor forte","Hemorróidas","Constipação intestinal","Mais de 2 evacuações ao dia","Consistência das fezes (Liquidas, semi-liquidas, amolecidas, formato de bolinhas, formato de anéis, secas e endurecidas, sangue nas fezes) {linha}"] },
                 shen_rim: { titulo: "Shen (Rim)", sintomas: ["Dor ou fraqueza (lombar, joelhos, calcanhar ou pés)","Diarréia da madrugada","Dentes fracos","Déficit auditivo","Acorda de madrugada pra urinar diariamente ou semanalmente","Doença óssea","Tontura","Disfunção sexual","Pedra no rim","Memória recente fraca","Doença neurológica","Zumbido no ouvido","Doença renal há {texto}"] },
@@ -258,9 +258,6 @@
                 }
             }
 
-            // =========================================================
-            // MÓDULO DE IMPORTAÇÃO (BLINDADO COM ITEM(0))
-            // =========================================================
             exportarBackup() {
                 const dataStr = localStorage.getItem(CONFIG_KEY) || "{}";
                 const blob = new Blob([dataStr], { type: "application/json" });
