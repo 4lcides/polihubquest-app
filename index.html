@@ -38,7 +38,7 @@
         .polihub-header h1 { font-size: 20px; color: var(--accent-color); margin-bottom: 4px; }
         .polihub-header p { font-size: 12px; color: var(--text-secondary); }
 
-        /* Taijitu Vetorial (Cadeado) */
+        /* Taijitu Vetorial (Cadeado - Limpo de Tooltips) */
         .polihub-admin-lock {
             position: absolute; top: 50%; right: 16px; transform: translateY(-50%);
             width: 44px; height: 44px; background-color: var(--bg-card); 
@@ -66,26 +66,16 @@
 
         .polihub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
 
-        /* Contêiner Base */
         .polihub-touch-label {
             display: flex; flex-direction: column; justify-content: center; min-height: var(--touch-target-size); padding: 8px;
             background: var(--bg-base); border-radius: 8px; font-size: 13px; border: 1px solid transparent;
             transition: all 0.2s ease; cursor: pointer; position: relative;
         }
 
-        .checkbox-wrapper {
-            display: flex; align-items: center; width: 100%; flex-wrap: wrap; gap: 4px;
-        }
+        .checkbox-wrapper { display: flex; align-items: center; width: 100%; flex-wrap: wrap; gap: 4px; }
+        .polihub-touch-label input[type="checkbox"] { width: 20px; height: 20px; margin-right: 6px; flex-shrink: 0; accent-color: var(--accent-color); }
+        .polihub-touch-label:has(input[type="checkbox"]:checked) { background: rgba(0, 230, 118, 0.1); border: 1px solid var(--accent-color); color: #fff; }
 
-        .polihub-touch-label input[type="checkbox"] {
-            width: 20px; height: 20px; margin-right: 6px; flex-shrink: 0; accent-color: var(--accent-color);
-        }
-
-        .polihub-touch-label:has(input[type="checkbox"]:checked) {
-            background: rgba(0, 230, 118, 0.1); border: 1px solid var(--accent-color); color: #fff;
-        }
-
-        /* Input de texto do {texto} */
         .polihub-inline-input { 
             background: transparent; border: none; border-bottom: 2px solid var(--text-secondary); 
             color: var(--accent-color); font-size: 14px; outline: none; text-align: center;
@@ -94,7 +84,6 @@
         .polihub-inline-input:focus { border-bottom-color: var(--accent-color); }
         .polihub-touch-label:has(input[type="checkbox"]:checked) .polihub-inline-input { color: #fff; border-bottom-color: var(--accent-color); }
 
-        /* Input de texto do {linha} */
         .text-input-label { cursor: default; }
         .text-input-label span { margin-bottom: 6px; font-weight: bold; color: #80CBC4; width: 100%; display: block;}
         .polihub-text-input { 
@@ -105,7 +94,6 @@
         .polihub-text-input:focus { border-color: var(--accent-color); }
         .has-value-bg { background: rgba(0, 230, 118, 0.1) !important; border: 1px solid var(--accent-color) !important; color: #fff; }
 
-        /* Micro-Controles Admin */
         .item-admin-controls {
             display: none; width: 100%; justify-content: space-around; 
             margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-color);
@@ -114,30 +102,21 @@
         .btn-item-action { background: transparent; border: none; font-size: 16px; cursor: pointer; padding: 4px; transition: transform 0.1s; }
         .btn-item-action:active { transform: scale(0.8); }
 
-        /* Controles do Cartão e Painel */
         .admin-control { display: none; }
         body.admin-mode .admin-control { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
         body.admin-mode .polihub-card { border: 1px dashed #FFCA28; }
         
-        .btn-admin-action {
-            background: var(--bg-base); border: 1px solid #FFCA28; color: #FFCA28; padding: 6px 12px;
-            border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; margin-bottom: 4px;
-        }
+        .btn-admin-action { background: var(--bg-base); border: 1px solid #FFCA28; color: #FFCA28; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; margin-bottom: 4px; }
         .btn-admin-action:active { background: #FFCA28; color: #000; }
-        
         .btn-admin-linha { border-color: #00E676; color: #00E676; }
         .btn-admin-linha:active { background: #00E676; color: #000; }
-        
         .btn-admin-reset { border-color: #F44336; color: #F44336; }
         .btn-admin-reset:active { background: #F44336; color: #fff; }
-
-        /* Estilos do Backup */
         .btn-admin-export { border-color: #2196F3; color: #2196F3; }
         .btn-admin-export:active { background: #2196F3; color: #fff; }
         .btn-admin-import { border-color: #9C27B0; color: #9C27B0; cursor: pointer; display: inline-block;}
         .btn-admin-import:active { background: #9C27B0; color: #fff; }
 
-        /* Botão Finalizar */
         .polihub-btn-finalizar {
             background-color: var(--accent-color); color: #000; font-weight: 900; font-size: 16px;
             border: none; border-radius: 12px; min-height: 60px; width: 100%; display: flex; 
@@ -145,6 +124,37 @@
             box-shadow: 0 0 15px rgba(0, 230, 118, 0.4); transition: all 0.3s ease;
         }
         .polihub-btn-finalizar:active { transform: scale(0.97); background-color: var(--accent-hover); }
+
+        /* ==========================================
+           MOTOR DE JANELAS DA VINCI (MODAL CUSTOMIZADO)
+           ========================================== */
+        .polihub-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center;
+            z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.2s; backdrop-filter: blur(2px);
+        }
+        .polihub-modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .polihub-modal {
+            background: var(--bg-card); padding: 24px; border-radius: 12px;
+            border: 1px solid var(--accent-color); text-align: center; width: 85%; max-width: 320px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.2s;
+        }
+        .polihub-modal-overlay.active .polihub-modal { transform: scale(1); }
+        .polihub-modal p { margin-bottom: 16px; color: var(--text-primary); font-weight: bold; font-size: 16px; }
+        .polihub-modal input {
+            width: 100%; padding: 12px; margin-bottom: 16px; border-radius: 6px;
+            border: 1px solid var(--border-color); background: var(--bg-base); color: #fff;
+            text-align: center; font-size: 16px; outline: none; transition: border-color 0.2s;
+        }
+        .polihub-modal input:focus { border-color: var(--accent-color); }
+        .polihub-modal-btns { display: flex; gap: 12px; justify-content: center; }
+        .polihub-modal-btns button {
+            flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;
+            transition: transform 0.1s;
+        }
+        .polihub-modal-btns button:active { transform: scale(0.95); }
+        .btn-modal-ok { background: var(--accent-color); color: #000; }
+        .btn-modal-cancel { background: var(--border-color); color: var(--text-primary); }
     </style>
 </head>
 <body>
@@ -152,7 +162,7 @@
     <header class="polihub-header">
         <h1>Questionário de Sintomas</h1>
         <p>Preencha os dados abaixo</p>
-        <div id="btn-cadeado-admin" class="polihub-admin-lock" title="Acesso Administrativo">
+        <div id="btn-cadeado-admin" class="polihub-admin-lock">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="26" height="26">
                 <circle cx="50" cy="50" r="48" fill="#000000" />
                 <path d="M50 2 a 48 48 0 0 1 0 96 a 24 24 0 0 1 0 -48 a 24 24 0 0 0 0 -48" fill="#FFFFFF" />
@@ -165,13 +175,12 @@
 
     <main class="polihub-container">
         <div id="anamnese-mtc-container"></div>
-        <button id="btn-finalizar" class="polihub-btn-finalizar">📋 FINALIZAR E COPIAR RESULTADO</button>
+        <button id="btn-finalizar" class="polihub-btn-finalizar">FINALIZAR E COPIAR RESULTADO</button>
     </main>
 
     <script>
         const CONFIG_KEY = 'PoliHubQuest_Config';
 
-        // O SEU NOVO CÓDIGO DE FÁBRICA ATUALIZADO FOI INJETADO AQUI:
         const PoliHubQuestData = {
             sistemas_zang_fu: {
                 shen_mente: { titulo: "Shen (Mente)", sintomas: ["Pensamento acelerado","Pensamento lento","Ideias estranhas","Ansiedade","Depressão","Mágoas / Ressentimentos","Timidez","Irritabilidade","Ira / Raiva explosiva","Chora facilmente","Indecisão","Manias","Preocupação","Pânico","Desânimo","Medos / Insegurança","Memória recente boa","Memória recente prejudicada (Quanto tempo?) {texto}"] },
@@ -217,42 +226,104 @@
 
             inicializarApp() {
                 this.renderizarFormularios();
-                this.btnCadeado.addEventListener('click', () => this.alternarModoAdmin());
+                this.btnCadeado.addEventListener('click', async () => await this.alternarModoAdmin());
                 this.btnFinalizar.addEventListener('click', () => this.gerarTextoSimples());
             }
 
-            alternarModoAdmin() {
+            // Motor Da Vinci de Janelas Nativas
+            async mostrarModal(mensagem, tipo = 'prompt', valorPadrao = '', isPassword = false) {
+                return new Promise((resolve) => {
+                    let overlay = document.getElementById('ph-modal');
+                    if (!overlay) {
+                        overlay = document.createElement('div');
+                        overlay.id = 'ph-modal';
+                        overlay.className = 'polihub-modal-overlay';
+                        overlay.innerHTML = `
+                            <div class="polihub-modal">
+                                <p id="ph-modal-msg"></p>
+                                <input type="text" id="ph-modal-input" autocomplete="off">
+                                <div class="polihub-modal-btns">
+                                    <button id="ph-modal-cancel" class="btn-modal-cancel">CANCELAR</button>
+                                    <button id="ph-modal-ok" class="btn-modal-ok">OK</button>
+                                </div>
+                            </div>
+                        `;
+                        document.body.appendChild(overlay);
+                    }
+
+                    const msgEl = document.getElementById('ph-modal-msg');
+                    const inputEl = document.getElementById('ph-modal-input');
+                    const btnOk = document.getElementById('ph-modal-ok');
+                    const btnCancel = document.getElementById('ph-modal-cancel');
+
+                    msgEl.innerHTML = mensagem.replace(/\n/g, '<br>');
+                    inputEl.type = isPassword ? 'password' : 'text';
+                    inputEl.value = valorPadrao;
+                    
+                    overlay.classList.add('active');
+
+                    if (tipo === 'alert') {
+                        inputEl.style.display = 'none';
+                        btnCancel.style.display = 'none';
+                    } else if (tipo === 'confirm') {
+                        inputEl.style.display = 'none';
+                        btnCancel.style.display = 'block';
+                    } else {
+                        inputEl.style.display = 'block';
+                        btnCancel.style.display = 'block';
+                        setTimeout(() => inputEl.focus(), 100);
+                    }
+
+                    const fechar = (valor) => {
+                        overlay.classList.remove('active');
+                        btnOk.onclick = null;
+                        btnCancel.onclick = null;
+                        inputEl.onkeydown = null;
+                        resolve(valor);
+                    };
+
+                    btnOk.onclick = () => fechar(tipo === 'prompt' ? inputEl.value : true);
+                    btnCancel.onclick = () => fechar(tipo === 'prompt' ? null : false);
+                    
+                    inputEl.onkeydown = (e) => {
+                        if (e.key === 'Enter') { e.preventDefault(); btnOk.click(); }
+                    };
+                });
+            }
+
+            async alternarModoAdmin() {
                 if (this.isAdmin) {
                     this.isAdmin = false;
                     document.body.classList.remove('admin-mode');
                 } else {
-                    const senha = prompt("Acesso negado");
+                    const senha = await this.mostrarModal("Acesso negado", 'prompt', '', true);
                     if (senha === this.config.senhaMestre) {
                         this.isAdmin = true;
                         document.body.classList.add('admin-mode');
                     } else if (senha !== null && senha !== "") {
-                        alert("Acesso negado");
+                        await this.mostrarModal("Acesso negado", 'alert');
                     }
                 }
                 this.renderizarFormularios(); 
             }
 
-            alterarSenha() {
-                const senhaAtual = prompt("Acesso negado");
+            async alterarSenha() {
+                const senhaAtual = await this.mostrarModal("Acesso negado", 'prompt', '', true);
                 if (senhaAtual === this.config.senhaMestre) {
-                    const novaSenha = prompt("Digite a sua NOVA senha mestre:");
+                    const novaSenha = await this.mostrarModal("Digite a NOVA senha:", 'prompt');
                     if (novaSenha && novaSenha.trim() !== "") {
                         this.config.senhaMestre = novaSenha.trim();
                         this.salvarConfig();
-                        alert("Senha alterada com sucesso!");
+                        await this.mostrarModal("Senha alterada", 'alert');
                     }
                 } else if (senhaAtual !== null) {
-                    alert("Acesso negado");
+                    await this.mostrarModal("Acesso negado", 'alert');
                 }
             }
 
-            resetarBancoDeDados() {
-                if(confirm("⚠️ ATENÇÃO: Isso apagará todas as edições feitas por você e restaurará as Fichas Originais exatas. Deseja continuar?")) {
+            async resetarBancoDeDados() {
+                const conf = await this.mostrarModal("ATENÇÃO: Isso restaurará as Fichas Originais. Continuar?", 'confirm');
+                if(conf) {
                     localStorage.removeItem(CONFIG_KEY);
                     window.location.reload();
                 }
@@ -272,32 +343,27 @@
             importarBackup(event) {
                 const input = event.target;
                 if (!input || !input.files || input.files.length === 0) return;
-                
                 const fileToLoad = input.files.item(0); 
-                
                 const reader = new FileReader();
-                
-                reader.onload = (e) => {
+                reader.onload = async (e) => {
                     try {
                         const data = JSON.parse(e.target.result);
                         if(data && data.ordem && data.sintomasCustomizados) {
                             localStorage.setItem(CONFIG_KEY, JSON.stringify(data));
-                            alert("✅ Backup restaurado com sucesso! A página será recarregada.");
+                            await this.mostrarModal("Backup restaurado. A página será recarregada.", 'alert');
                             window.location.reload();
                         } else {
-                            alert("❌ Arquivo de backup inválido. Estrutura não reconhecida.");
+                            await this.mostrarModal("Arquivo inválido.", 'alert');
                         }
                     } catch(err) {
-                        alert("❌ Erro fatal: O arquivo escolhido não é um formato suportado.");
+                        await this.mostrarModal("Erro: Formato não suportado.", 'alert');
                     }
                     input.value = ''; 
                 };
-
-                reader.onerror = () => {
-                    alert("❌ Ocorreu um erro no motor do navegador ao tentar ler o arquivo.");
+                reader.onerror = async () => {
+                    await this.mostrarModal("Erro de leitura do arquivo.", 'alert');
                     input.value = '';
                 };
-
                 reader.readAsText(fileToLoad);
             }
 
@@ -309,9 +375,9 @@
                 this.renderizarFormularios();
             }
 
-            renomearTitulo(chave) {
+            async renomearTitulo(chave) {
                 const atual = this.config.titulosCustomizados[chave] || PoliHubQuestData.sistemas_zang_fu[chave].titulo;
-                const novo = prompt("Novo título do Cartão:", atual);
+                const novo = await this.mostrarModal("Novo título:", 'prompt', atual);
                 if (novo && novo.trim() !== "") {
                     this.config.titulosCustomizados[chave] = novo.trim();
                     this.salvarConfig();
@@ -319,12 +385,9 @@
                 }
             }
 
-            adicionarSintoma(chave, tipo) {
-                let msg = tipo === 'linha' ? 
-                    "Digite o nome da sua Nova Linha de Observação:" : 
-                    "Digite o novo sintoma:\nDica: Para criar Checkbox + preenchimento, escreva {texto}.\nEx: 'Fumante há: {texto}'";
-                
-                let novo = prompt(msg);
+            async adicionarSintoma(chave, tipo) {
+                let msg = tipo === 'linha' ? "Nome da Nova Linha:" : "Novo sintoma (use {texto} para preenchimento):";
+                let novo = await this.mostrarModal(msg, 'prompt');
                 if (novo && novo.trim() !== "") {
                     let textoFinal = tipo === 'linha' ? `${novo.trim()} {linha}` : novo.trim();
                     this.config.sintomasCustomizados[chave].push(textoFinal);
@@ -342,9 +405,9 @@
                 this.renderizarFormularios();
             }
 
-            editarItem(chave, index) {
+            async editarItem(chave, index) {
                 const atual = this.config.sintomasCustomizados[chave][index];
-                const novo = prompt("Edite o campo (Mantenha {texto} ou {linha} se houver):", atual);
+                const novo = await this.mostrarModal("Editar campo:", 'prompt', atual);
                 if (novo && novo.trim() !== "") {
                     this.config.sintomasCustomizados[chave][index] = novo.trim();
                     if (atual !== novo.trim() && this.estadoAtual[chave] && this.estadoAtual[chave][atual]) {
@@ -355,8 +418,9 @@
                 }
             }
 
-            deletarItem(chave, index) {
-                if (confirm("Tem certeza que deseja remover este item?")) {
+            async deletarItem(chave, index) {
+                const conf = await this.mostrarModal("Remover este item?", 'confirm');
+                if (conf) {
                     const sintoma = this.config.sintomasCustomizados[chave][index];
                     this.config.sintomasCustomizados[chave].splice(index, 1);
                     if (this.estadoAtual[chave] && this.estadoAtual[chave][sintoma]) {
@@ -369,9 +433,6 @@
 
             salvarConfig() { localStorage.setItem(CONFIG_KEY, JSON.stringify(this.config)); }
 
-            // =========================================================
-            // MOTOR DE RENDERIZAÇÃO
-            // =========================================================
             renderizarFormularios() {
                 this.containerMTC.innerHTML = '';
                 let fragment = document.createDocumentFragment();
@@ -383,7 +444,7 @@
                     
                     const tituloPainel = document.createElement('h2');
                     tituloPainel.style.color = '#FFCA28';
-                    tituloPainel.textContent = '⚙️ Painel do Consultório';
+                    tituloPainel.textContent = 'PAINEL DO CONSULTÓRIO';
                     painelAdmin.appendChild(tituloPainel);
 
                     const painelBotoes = document.createElement('div');
@@ -393,19 +454,19 @@
 
                     const btnMudarSenha = document.createElement('button');
                     btnMudarSenha.className = 'btn-admin-action';
-                    btnMudarSenha.innerHTML = '🔑 Alterar Senha';
-                    btnMudarSenha.onclick = () => this.alterarSenha();
+                    btnMudarSenha.innerHTML = 'ALTERAR SENHA';
+                    btnMudarSenha.onclick = async () => await this.alterarSenha();
                     painelBotoes.appendChild(btnMudarSenha);
 
                     const btnExport = document.createElement('button');
                     btnExport.className = 'btn-admin-action btn-admin-export';
-                    btnExport.innerHTML = '💾 Exportar Backup';
+                    btnExport.innerHTML = 'EXPORTAR BACKUP';
                     btnExport.onclick = () => this.exportarBackup();
                     painelBotoes.appendChild(btnExport);
 
                     const btnImportLabel = document.createElement('label');
                     btnImportLabel.className = 'btn-admin-action btn-admin-import';
-                    btnImportLabel.innerHTML = '📂 Importar Backup';
+                    btnImportLabel.innerHTML = 'IMPORTAR BACKUP';
                     const fileInput = document.createElement('input');
                     fileInput.type = 'file';
                     fileInput.accept = '.json';
@@ -416,8 +477,8 @@
 
                     const btnReset = document.createElement('button');
                     btnReset.className = 'btn-admin-action btn-admin-reset';
-                    btnReset.innerHTML = '♻️ Restaurar Fichas Padrão';
-                    btnReset.onclick = () => this.resetarBancoDeDados();
+                    btnReset.innerHTML = 'RESTAURAR PADRÃO';
+                    btnReset.onclick = async () => await this.resetarBancoDeDados();
                     painelBotoes.appendChild(btnReset);
 
                     painelAdmin.appendChild(painelBotoes);
@@ -434,11 +495,11 @@
                     const adminControls = document.createElement('div');
                     adminControls.className = 'admin-control';
                     
-                    const btnSubir = document.createElement('button'); btnSubir.className = 'btn-admin-action'; btnSubir.innerHTML = '⬆️ Subir Bloco'; btnSubir.onclick = () => this.reordenarCard(indexCard, -1);
-                    const btnDescer = document.createElement('button'); btnDescer.className = 'btn-admin-action'; btnDescer.innerHTML = '⬇️ Descer Bloco'; btnDescer.onclick = () => this.reordenarCard(indexCard, 1);
-                    const btnRenomear = document.createElement('button'); btnRenomear.className = 'btn-admin-action'; btnRenomear.innerHTML = '✏️ Editar Título'; btnRenomear.onclick = () => this.renomearTitulo(chave);
-                    const btnAddCheckbox = document.createElement('button'); btnAddCheckbox.className = 'btn-admin-action'; btnAddCheckbox.innerHTML = '➕ Checkbox'; btnAddCheckbox.onclick = () => this.adicionarSintoma(chave, 'checkbox');
-                    const btnAddLinha = document.createElement('button'); btnAddLinha.className = 'btn-admin-action btn-admin-linha'; btnAddLinha.innerHTML = '➕ Nova Linha Livre'; btnAddLinha.onclick = () => this.adicionarSintoma(chave, 'linha');
+                    const btnSubir = document.createElement('button'); btnSubir.className = 'btn-admin-action'; btnSubir.innerHTML = 'SUBIR BLOCO'; btnSubir.onclick = () => this.reordenarCard(indexCard, -1);
+                    const btnDescer = document.createElement('button'); btnDescer.className = 'btn-admin-action'; btnDescer.innerHTML = 'DESCER BLOCO'; btnDescer.onclick = () => this.reordenarCard(indexCard, 1);
+                    const btnRenomear = document.createElement('button'); btnRenomear.className = 'btn-admin-action'; btnRenomear.innerHTML = 'EDITAR TÍTULO'; btnRenomear.onclick = async () => await this.renomearTitulo(chave);
+                    const btnAddCheckbox = document.createElement('button'); btnAddCheckbox.className = 'btn-admin-action'; btnAddCheckbox.innerHTML = '+ CHECKBOX'; btnAddCheckbox.onclick = async () => await this.adicionarSintoma(chave, 'checkbox');
+                    const btnAddLinha = document.createElement('button'); btnAddLinha.className = 'btn-admin-action btn-admin-linha'; btnAddLinha.innerHTML = '+ LINHA LIVRE'; btnAddLinha.onclick = async () => await this.adicionarSintoma(chave, 'linha');
 
                     if (indexCard > 0) adminControls.appendChild(btnSubir);
                     if (indexCard < this.config.ordem.length - 1) adminControls.appendChild(btnDescer);
@@ -485,7 +546,6 @@
                             const textInput = document.createElement('input'); 
                             textInput.type = 'text'; 
                             textInput.className = 'polihub-text-input';
-                            textInput.placeholder = 'Digite as observações...';
                             
                             if (estadoItem && typeof estadoItem === 'object' && estadoItem.text) {
                                 textInput.value = estadoItem.text;
@@ -533,7 +593,6 @@
                                 const textInput = document.createElement('input'); 
                                 textInput.type = 'text'; 
                                 textInput.className = 'polihub-inline-input';
-                                textInput.placeholder = ''; 
                                 
                                 if (estadoItem && typeof estadoItem === 'object' && estadoItem.text) {
                                     textInput.value = estadoItem.text;
@@ -584,22 +643,21 @@
 
                         label.appendChild(contentWrapper);
 
-                        // Controles MicroAdmin
                         if (this.isAdmin) {
                             const itemControls = document.createElement('div');
                             itemControls.className = 'item-admin-controls';
 
-                            const btnUp = document.createElement('button'); btnUp.className = 'btn-item-action'; btnUp.innerHTML = '⬆️'; btnUp.title = 'Subir';
+                            const btnUp = document.createElement('button'); btnUp.className = 'btn-item-action'; btnUp.innerHTML = '▲'; 
                             btnUp.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.reordenarItem(chave, indexItem, -1); };
 
-                            const btnDown = document.createElement('button'); btnDown.className = 'btn-item-action'; btnDown.innerHTML = '⬇️'; btnDown.title = 'Descer';
+                            const btnDown = document.createElement('button'); btnDown.className = 'btn-item-action'; btnDown.innerHTML = '▼'; 
                             btnDown.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.reordenarItem(chave, indexItem, 1); };
 
-                            const btnEdit = document.createElement('button'); btnEdit.className = 'btn-item-action'; btnEdit.innerHTML = '✏️'; btnEdit.title = 'Editar';
-                            btnEdit.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.editarItem(chave, indexItem); };
+                            const btnEdit = document.createElement('button'); btnEdit.className = 'btn-item-action'; btnEdit.innerHTML = '✎'; 
+                            btnEdit.onclick = async (e) => { e.preventDefault(); e.stopPropagation(); await this.editarItem(chave, indexItem); };
 
-                            const btnDel = document.createElement('button'); btnDel.className = 'btn-item-action'; btnDel.innerHTML = '❌'; btnDel.title = 'Apagar';
-                            btnDel.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.deletarItem(chave, indexItem); };
+                            const btnDel = document.createElement('button'); btnDel.className = 'btn-item-action'; btnDel.innerHTML = '✕'; 
+                            btnDel.onclick = async (e) => { e.preventDefault(); e.stopPropagation(); await this.deletarItem(chave, indexItem); };
 
                             if (indexItem > 0) itemControls.appendChild(btnUp);
                             if (indexItem < listaSintomas.length - 1) itemControls.appendChild(btnDown);
@@ -619,9 +677,6 @@
                 this.containerMTC.appendChild(fragment);
             }
 
-            // =========================================================
-            // NOVO MOTOR DE EXPORTAÇÃO (TEXTO SIMPLES E ÁREA DE TRANSFERÊNCIA)
-            // =========================================================
             gerarTextoSimples() {
                 let textoFinal = "QUESTIONÁRIO DE SINTOMAS - MTC\n";
                 textoFinal += "========================================\n\n";
@@ -661,23 +716,33 @@
                     textoFinal += "Nenhum sintoma foi assinalado.\n";
                 }
 
-                const blob = new Blob([textoFinal], { type: "text/plain;charset=utf-8" });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = "Sintomas_Paciente.txt";
-                a.click();
-                URL.revokeObjectURL(url);
-
                 if (navigator.clipboard && window.isSecureContext) {
                     navigator.clipboard.writeText(textoFinal).then(() => {
                         this.animarBotaoSucesso();
                     }).catch(err => {
-                        console.error("Erro ao copiar para área de transferência:", err);
+                        console.error("Erro ao copiar via API moderna:", err);
+                        this.copiaFallback(textoFinal);
                     });
                 } else {
-                    this.animarBotaoSucesso();
+                    this.copiaFallback(textoFinal);
                 }
+            }
+
+            copiaFallback(texto) {
+                const textArea = document.createElement("textarea");
+                textArea.value = texto;
+                textArea.style.position = "fixed";
+                textArea.style.top = "-9999px";
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    this.animarBotaoSucesso();
+                } catch (err) {
+                    console.error('Falha no fallback de cópia', err);
+                    alert("Seu navegador bloqueou a cópia automática.");
+                }
+                document.body.removeChild(textArea);
             }
 
             animarBotaoSucesso() {
@@ -685,7 +750,7 @@
                 const textoOriginal = btn.innerHTML;
                 const corOriginal = btn.style.backgroundColor;
                 
-                btn.innerHTML = "📋 TEXTO COPIADO COM SUCESSO!";
+                btn.innerHTML = "TEXTO COPIADO COM SUCESSO!";
                 btn.style.backgroundColor = "#2196F3"; 
                 
                 setTimeout(() => {
