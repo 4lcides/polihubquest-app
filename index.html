@@ -258,7 +258,7 @@
             }
 
             // =========================================================
-            // MÓDULO DE SALVAGUARDA CORRIGIDO (O REPARO CIRÚRGICO)
+            // MÓDULO DE IMPORTAÇÃO (BLINDADO COM ITEM(0))
             // =========================================================
             exportarBackup() {
                 const dataStr = localStorage.getItem(CONFIG_KEY) || "{}";
@@ -272,13 +272,14 @@
             }
 
             importarBackup(event) {
-                const files = event.target.files;
-                if (!files || files.length === 0) return;
+                const input = event.target;
+                if (!input || !input.files || input.files.length === 0) return;
                 
-                // AQUI ESTÁ A CORREÇÃO CIRÚRGICA:  captura o arquivo físico real!
-                const file = files; 
+                // A SOLUÇÃO DEFINITIVA: O método item(0) não pode ser apagado por formatações!
+                const fileToLoad = input.files.item(0); 
                 
                 const reader = new FileReader();
+                
                 reader.onload = (e) => {
                     try {
                         const data = JSON.parse(e.target.result);
@@ -287,13 +288,20 @@
                             alert("✅ Backup restaurado com sucesso! A página será recarregada.");
                             window.location.reload();
                         } else {
-                            alert("❌ Arquivo de backup inválido.");
+                            alert("❌ Arquivo de backup inválido. Estrutura não reconhecida.");
                         }
                     } catch(err) {
-                        alert("❌ Erro ao ler o arquivo de backup. Certifique-se de ser um arquivo .json.");
+                        alert("❌ Erro fatal: O arquivo escolhido não é um formato suportado.");
                     }
+                    input.value = ''; // Limpa a memória para não travar o próximo uso
                 };
-                reader.readAsText(file);
+
+                reader.onerror = () => {
+                    alert("❌ Ocorreu um erro no motor do navegador ao tentar ler o arquivo.");
+                    input.value = '';
+                };
+
+                reader.readAsText(fileToLoad);
             }
 
             reordenarCard(indexAtual, direcao) {
